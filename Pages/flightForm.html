@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+
+    <script>
+
+        $(document).ready(function () {
+
+            $("#flightDetails").submit(sendTofes);
+
+            //$("#SubmitFlightBTN").click(SubmitFlight);
+
+        });
+
+
+
+
+
+        function sendTofes() {
+
+            alert("in sendTofes");
+
+            let from = $("#fromTB").val();
+            let to = $("#toTB").val();
+            let price = $("#priceTB").val();
+
+            myFlight = {
+                From: from,
+                To: to,
+                Price: price
+            }
+
+            ajaxCall("POST", "../api/Flights", JSON.stringify(myFlight), postSCB, postECB);
+            return false;
+        }
+
+    </script>
+
+</head>
+<body>
+
+    <form id="flightDetails">
+        <table>
+            <tr>
+                <td>from:</td>
+                <td><input type="text" id="fromTB" required /></td>
+            </tr>
+            <tr>
+                <td>to:</td>
+                <td><input type="text" id="toTB" /></td>
+            </tr>
+            <tr>
+                <td>price:</td>
+                <td><input type="number" id="priceTB" /></td>
+            </tr>
+            <tr>
+                <td><button>Submit Flight</button></td>
+            </tr>
+        </table>
+
+
+    </form>
+
+</body>
+</html>

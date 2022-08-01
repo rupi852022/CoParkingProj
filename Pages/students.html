@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            $("#getByPrefixBTN").click(GetByPrefix);
+            $("#insertStudentBTN").click(postStudent);
+
+            console.log("ready!");
+            ajaxCall("GET", "../api/Students", "", successCB, errorCB);
+        });
+
+        function successCB(studentsListFS) {
+            console.log(studentsListFS);
+        }
+
+        function errorCB(err) {
+            alert(err.responseJSON.ExceptionMessage);
+        }
+
+        function postSuccessCB() {
+            console.log("success");
+        }
+
+        function postErrorCB(err) {
+            alert(err.responseJSON.ExceptionMessage);
+        }
+
+
+        function GetByPrefix() {
+            let prefix = $("#prefixTB").val();
+            let queryString = "?prefix=" + prefix;
+            let url = "../api/Students" + queryString
+            ajaxCall("GET", url, "", successCB, errorCB);
+
+
+        }
+
+        function postStudent() {
+            let name = $("#nameTB").val();
+            let age = $("#ageTB").val();
+            let student = { // must be identical to the names of the properties
+                Name: name,
+                Age:age
+            }
+
+            ajaxCall("POST", "../api/Students", JSON.stringify(student), postSuccessCB, postErrorCB);
+
+
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+
+    <table>
+        <tr>
+            <td>
+                Starts with
+            </td>
+            <td>
+                <input type="text" id="prefixTB" />
+            </td>
+
+        </tr>
+
+        <tr>
+            <td>
+                <button id="getByPrefixBTN">Get By Prefix</button>
+            </td>
+        </tr>
+
+
+    </table>
+
+    <table>
+        <tr>
+            <td>name</td>
+            <td><input type="text" id="nameTB" /></td>
+        </tr>
+        <tr>
+            <td>age</td>
+            <td><input type="text" id="ageTB" /></td>
+        </tr>
+        <tr>
+            <td>
+                <button id="insertStudentBTN">Insert</button>
+            </td>
+        </tr>
+    </table>
+
+
+
+</body>
+</html>
