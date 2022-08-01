@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"></script>
+
+    <script src="../Scripts/ajaxCalls.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+
+     //       ajaxCall("GET", "../api/Patients?severity=2", "", getSCB, getECB);
+            ajaxCall("GET", "../api/Flights", "", getSCB, getECB);
+
+            $("#SubmitFlightBTN").click(SubmitFlight);
+
+        });
+
+
+        function getSCB(flightsList) {
+            console.log(flightsList);
+        }
+
+        function getECB(err) {
+            alert(err);
+        }
+
+        function SubmitFlight() {
+
+            let from = $("#fromTB").val();
+            let to = $("#toTB").val();
+            let price = $("#priceTB").val();
+
+            myFlight = {
+                From: from,
+                To: to,
+                Price:price
+            }
+
+            ajaxCall("POST", "../api/Flights", JSON.stringify(myFlight), postSCB, postECB);
+
+        }
+
+        function postSCB(result) {
+            alert(result);
+        }
+
+        function postECB(err) {
+            alert(err);
+        }
+
+
+    </script>
+
+
+</head>
+<body>
+
+
+
+    <table>
+        <tr>
+            <td>from:</td>
+            <td><input type="text" id="fromTB" /></td>
+        </tr>
+        <tr>
+            <td>to:</td>
+            <td><input type="text" id="toTB" /></td>
+        </tr>
+        <tr>
+            <td>price:</td>
+            <td><input type="number" id="priceTB" /></td>
+        </tr>
+        <tr>
+            <td><button id="SubmitFlightBTN">Submit Flight</button></td>
+        </tr>
+    </table>
+
+</body>
+</html>
